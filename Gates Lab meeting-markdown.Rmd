@@ -8,34 +8,45 @@ output:
     toc: yes
     toc_depth: 4
     toc_float: yes
+  pdf_document:
+    keep_tex: TRUE
 ---
-```{r setup chunk, setup, include = FALSE, message="hide", warning="hide"}
+```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
 # in this area (above you can put global options, such as "no warmings", "no messages")
 # you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
 # instead, use R projects and all your files will be in the location of your Project... see here
+
+# or you can set it like this...
+
+require("knitr")
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+
 getwd()
 ```
 
 ## This is an R Markdown!
 
-R markdown is great, and when I say great, **I mean REALLY great.** 
-Here, you can write code and execute functions just the same as you would in a normal R script file. However, the added benefit of using markdown is that you can export your script with...   
-  *(1) figures embedded*  
+R markdown is great, and when I say great, **I mean REALLY great.**   
+  
+When exporting your markdown you can...
+  *(1) embed figures*  
   *(2) view tables*  
   *(3) export models*  
   *(4) archive your data pipeline*  
   
-The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain.  
-  
-In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
-  
-Here are some common commands and examples of what Markdown can do for you.
+You can write code and execute functions in a similar way to normal R script files. However, there are a few distinct differences between R scripts and R markdown scripts. Some of these differences relate to how code is executed. Other differences can be seen in the added benefit of integrating scripts with outputs and other embedded properties.  
 
+The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain. In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
+  
+Here are some common commands and examples of what Markdown can do for you. I reccommend visiting the `R Bookdown for a complete and exhaustive guide` https://bookdown.org/yihui/rmarkdown/ or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 
-## Common Commands 
+### Markdown basics
+  
+
+#### Common Commands 
 
 *Notice the script at the very top of your markdown (this is not standard, but is customized)*  
-`
+  
 output:  
   html_document:  
   code_folding: hide  
@@ -54,27 +65,51 @@ Let's go through this line by line...
   
 *Play around with these options, and see how they affect your code*  
 
-  
-### Other Markdown essentials  
-  
-**bold**  
-*italics*  
-a line break--is executed by two spaces at the end of previous line, and a return  
-use '#' for headings, # ## ### ####.... # is largest and #### smallest
 
-` r setup `  This is your set up code and is a useful way to get around the fact that knitr will look for your .Rmd file and all files in the this directory. By setting the root.dir you can force knitr to look for files in the directory you specify and the folders within.    
+#### The setup chunk
+` r setup `  This is your set up code and is a useful way to get around the fact that knitr will look for your .Rmd file and all files in the this directory. By setting the root.dir you can force knitr to look for files in the directory you specify and the folders within.  
 
-`include=FALSE`  This command makes your code absent from final html, essentially it is 'not included'  
+In the setup chunk (the first code chunk) you can set 'global' options, such as message/warning exclusion, or hiding results or outputs.  
+`knitr::opts_chunk$set(warning=FALSE, message=FALSE)` This command here is requiring the package `knitr` in the code chunk ('set' for set up) and is saying to "make all warning and message FALSE" i.e., hide them from output.  
+  
+`include=FALSE`  This command makes your code absent from final html. It is executed but the code is hidden.  
 
 `eval=FALSE`  This command allows you to show the code in your script within R studio, but not evaluate (or run) the code. It is effectively silent in your analysis and output html.
 
 `echo=FALSE`  This will show the output but not the code chunk...  notice the difference.
 
-`results='hide'` This will hide output, or any returned results from your commands  
+`results='hide'` This will hide all results in a code chunk, or any returned results from your commands.  
   
 `fig.show=FALSE` This will hide the figures you generate. This may be useful for some of those assumptions of ANOVA-- you want to see it, but do you want all of them in your final archived datafile? Maybe not.  
 
-## Code chunks
+`fig.height=3, fig.width=3` This will format your figure to be 3x3
+  
+
+#### Text formatting  
+It is useful to understand how to modify text and format headings. You can do this in a variety of ways.    
+
+A line break--is executed by two spaces at the end of previous line, and a return     
+use `#` for headings, `#`.... `####` and so on.  # is largest and #### smallest heading
+
+Two forms for *italics* and _italics_  and  **bold** and __bold__ to modiy text  
+  
+Superscript superscript^2^ or strikethroughs  ~~strikethrough~~  
+  
+add links [R studio link](www.rstudio.com)  
+  
+endash: --   emdash: ---  and ellipsis: ...   
+  
+inline equation: $A = \pi*r^{2}$ or $y = a+ b*x$  
+  
+(a line can inserted with `***`)
+***
+  
+![Pa'āni is *beautiful* and **(sassy)**](data/Paani.jpg){ width=15% }  
+  
+
+
+
+#### Code chunks
 ```{r}
 ## love your data and it will love you back
 getwd()
