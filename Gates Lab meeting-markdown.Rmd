@@ -93,6 +93,14 @@ data<-read.csv("data/coral_data.csv")
 names(data)
 ```
 ## Including figures
+You can include figures from script output as results, or figures from files in your directory. First, let's see how you can add an image from a file to your markdown.
+
+![](data/M cap bleached.jpg){ width=50% }
+
+
+**Figure 1.** This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)
+
+
 In this chunk we will make a figure of chlorophyll *a* concentrations cm^-2^.  Some of the syntax here should be familiar.
 
 ```{r, message=FALSE, results='hide'}
