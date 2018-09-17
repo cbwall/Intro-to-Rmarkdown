@@ -9,8 +9,9 @@ output:
     toc_depth: 4
     toc_float: yes
 ---
-```{r setup chunk, setup, include = FALSE}
-# can set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
+```{r setup chunk, setup, include = FALSE, message="hide", warning="hide"}
+# in this area (above you can put global options, such as "no warmings", "no messages")
+# you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
 # instead, use R projects and all your files will be in the location of your Project... see here
 getwd()
 ```
