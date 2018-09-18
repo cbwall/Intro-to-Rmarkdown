@@ -1,6 +1,6 @@
 ---
 title: "An introduction to R markdown"
-author: "C Wall"
+author: "Chris B. Wall -- chris.wall@hawaii.edu"
 date: "9/18/2018"
 output:
   pdf_document:
@@ -46,18 +46,19 @@ Here are some common commands and examples of what Markdown can do for you. I re
 #### Common Commands 
 
 *Notice the script at the very top of your markdown (this is not standard, but is customized)*  
-  
+
+***  
 output:  
   html_document:  
   code_folding: hide  
   toc: yes  
   toc_depth: 4  
-  toc_float: yes  `  
-
+  toc_float: yes 
+***  
+  
 Let's go through this line by line...  
   
 - `html_document`: an option you originally set when you open the markdown. This is how your file will be exported.  
-
 - `code_folding: hide` will allow you to *show* or *hide* all code (option at top of file)  
 - `toc`:  for table of contents on the left  
 - `toc_depth`:  how long you will have table of contents before folding over  
@@ -98,7 +99,7 @@ In the setup chunk (the first code chunk) you can set 'global' options, such as 
 - `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
   
 Now let's use some of these options to see how this code could be executed.
-```{r, fig.show='hold', out.width= "50%", fig.cap="**FIGURE EXAMPLE** *Side-by-side plots at 50% with a 'fig hold' option*"}
+```{r, fig.show='hold', out.width= "50%", fig.align='center', fig.cap="*Figure 1. Example of side-by-side plots at 50% with a 'fig hold' option*"}
 data<-read.csv("data/coral_data.csv")
 par(mar = c(4, 4, 0.2, 0.1))
 plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen")
@@ -106,6 +107,24 @@ plot(data$chla, pch=16, cex=1.2, col="coral")
 
 ```
   
+  
+But something to consider... R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened.  
+```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap="**Figure 2**. Tissue biomass in two coral species."}
+# use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
+
+MC.df<-data[(data$Species=="MC"),] ## Montipora capitata alone
+PC.df<-data[(data$Species=="PC"),] ## Porites compress alone
+
+par(mar = c(4, 4, 3, 0.1))
+
+plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Biomass in two coral species", xlab=expression(paste("Biomass mg cm"^-2, sep="")))
+lines(density(PC.df$biomass), lwd=2, col="darkslategray3", yaxt="n", ylab="", xaxt="n", xlab="")
+legend("topright", legend=c(expression(italic("Montipora capitata")), expression(italic("Porites compressa"))), lwd=2, col=c("darksalmon", "darkslategray3"), bty="n")
+
+dev.print(pdf, "figures/biomass in two species.pdf", encod="MacRoman", height=4, width=6) # export in directory
+dev.off()
+
+```
 
 #### Text formatting  
 It is useful to understand how to modify text and format headings. You can do this in a variety of ways.    
@@ -127,15 +146,14 @@ It is useful to understand how to modify text and format headings. You can do th
 - `inline equation`: $A = \pi*r^{2}$ or $y = a+ b*x$  
   
 - (a line can inserted with `***`)  
-***  
+***   
 And don't forget about adding in figures to your markdown from files/images in your directory...  
   
 <center>  
   
-![Pa'āni is *beautiful* (and **sassy**)](data/Paani.jpg){ width=30%}  
+![**Figure 3**. Pa'āni is *beautiful* (and **sassy**). Beware!](data/Paani.jpg){ width=30%}  
   
-</center>
-***  
+</center>  
 Note in the code above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
 
 
@@ -162,21 +180,22 @@ names(data)
 ## Including figures
 You can include figures from script output as results, or figures from files in your directory. First, let's see how you can add an image from a file to your markdown.
 
-![](data/M cap bleached.jpg){ width=50% }
+<center>  
+
+![**Figure 4.** This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)](data/M cap bleached.jpg){ width=50% }
 
 
-**Figure 1.** This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)
-
+</center>  
 
 In this chunk we will make a figure of chlorophyll *a* concentrations cm^-2^.  Some of the syntax here should be familiar.
 
-```{r chlorophyll a figure, results='hide', fig.cap="*Figure 3. Chlorophyll a density. Caption set in code chunk setting*"}
+```{r chlorophyll a figure, results='hide', fig.align='center', fig.cap="**Figure 5**. Chlorophyll a density. Caption set in code chunk setting"}
 # message = FALSE to hide any messages with exporting the figure with dev.off(), or anything else that R may generate. If you set warning=FALSE, warnings will be hidden as well. 
 
 par(mfrow=c(1,1), pty="sq")
 Status.label<-c("Bleached", "Pigmented") # for x labels
 
-plot(chla~Status, data=data, xaxt="n",
+plot(chla~Status, data=data, xaxt="n", col="darkslategray1",
      ylab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), 
      xlab="Coral Physiological State", 
      main="Example Figure")
@@ -208,22 +227,22 @@ mean(chla.transform)
   
 - execute and show code and SEE the figure I generate, but hide results (returned data)  
   `results='hide', fig.height=4, fig.width=4, fig.align='center'`
-```{r, results='hide', fig.height=4, fig.width=4, fig.align='center'}
+```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 6.** Boxplot of square-root transformed chlorophyll *a* data"}
 mean(chla.transform)
 
 # make figure 4 x 4 and center align
-plot(chla.transform~Site, data=data)
+hist(chla.transform, data=data, col="darkseagreen1")
 ```
 
 ... or just print the figure with `echo=FALSE` sans the code
 ```{r, echo=FALSE, fig.height=4, fig.width=4, fig.align='center'}
-plot(chla.transform~Site, data=data)
+plot(chla.transform~Site, data=data, col="darkseagreen1")
 # make figure 4 x 4 and center align
 ```
 
 ... or show NOTHING with `results='hide', fig.show=FALSE`
 ```{r, results='hide', fig.show='hide'}
-plot(chla.transform~Site, data=data)
+plot(chla.transform~Site, data=data, col="darkseagreen1")
 ```
 
 ### Make a table of summary data
