@@ -151,7 +151,7 @@ And don't forget about adding in figures to your markdown from files/images in y
   
 <center>  
   
-![**Pa'āni is *beautiful* (and **sassy**). Beware!](data/Paani.jpg){ width=30%}  
+![**Pa'āni is *beautiful* (and sassy). Beware!**](data/Paani.jpg){ width=30%}  
   
 </center>  
   
