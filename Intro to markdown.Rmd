@@ -28,7 +28,7 @@ getwd()
 
 R markdown is great, and when I say great, **I mean REALLY great.**   
   
-When exporting your markdown you can...
+When exporting your markdown you can...  
   *(1) embed figures*  
   *(2) view tables*  
   *(3) export models*  
@@ -99,7 +99,7 @@ In the setup chunk (the first code chunk) you can set 'global' options, such as 
 - `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
   
 Now let's use some of these options to see how this code could be executed.
-```{r, fig.show='hold', out.width= "50%", fig.align='center', fig.cap="*Figure 1. Example of side-by-side plots at 50% with a 'fig hold' option*"}
+```{r, fig.show='hold', out.width= "50%", fig.align='left', fig.cap="Example of side-by-side plots at 50% with a 'fig hold' option"}
 data<-read.csv("data/coral_data.csv")
 par(mar = c(4, 4, 0.2, 0.1))
 plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen")
@@ -109,7 +109,7 @@ plot(data$chla, pch=16, cex=1.2, col="coral")
   
   
 But something to consider... R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened.  
-```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap="**Figure 2**. Tissue biomass in two coral species."}
+```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap="Tissue biomass in two coral species."}
 # use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
 
 MC.df<-data[(data$Species=="MC"),] ## Montipora capitata alone
@@ -150,9 +150,7 @@ It is useful to understand how to modify text and format headings. You can do th
 And don't forget about adding in figures to your markdown from files/images in your directory...  
   
 <center>  
-  
-![**Figure 3**. Pa'āni is *beautiful* (and **sassy**). Beware!](data/Paani.jpg){ width=30%}  
-  
+![**Pa'āni is *beautiful* (and **sassy**). Beware!](data/Paani.jpg){ width=30%}  
 </center>  
 Note in the code above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
 
@@ -182,14 +180,14 @@ You can include figures from script output as results, or figures from files in 
 
 <center>  
 
-![**Figure 4.** This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)](data/M cap bleached.jpg){ width=50% }
+![This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)](data/M cap bleached.jpg){ width=50% }
 
 
 </center>  
 
 In this chunk we will make a figure of chlorophyll *a* concentrations cm^-2^.  Some of the syntax here should be familiar.
 
-```{r chlorophyll a figure, results='hide', fig.align='center', fig.cap="**Figure 5**. Chlorophyll a density. Caption set in code chunk setting"}
+```{r chlorophyll a figure, results='hide', fig.align='center', fig.cap="Chlorophyll a density. Caption set in code chunk setting"}
 # message = FALSE to hide any messages with exporting the figure with dev.off(), or anything else that R may generate. If you set warning=FALSE, warnings will be hidden as well. 
 
 par(mfrow=c(1,1), pty="sq")
@@ -227,7 +225,7 @@ mean(chla.transform)
   
 - execute and show code and SEE the figure I generate, but hide results (returned data)  
   `results='hide', fig.height=4, fig.width=4, fig.align='center'`
-```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 6.** Boxplot of square-root transformed chlorophyll *a* data"}
+```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="Boxplot of square-root transformed chlorophyll *a* data"}
 mean(chla.transform)
 
 # make figure 4 x 4 and center align
