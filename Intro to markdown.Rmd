@@ -143,15 +143,18 @@ It is useful to understand how to modify text and format headings. You can do th
 - `emdash`: ---  
 - `ellipsis`: ...   
   
-- `inline equation`: $A = \pi*r^{2}$ or $y = a+ b*x$  
+- `inline equation`: $A = \pi*r^{2}$ or $y = a*x+ b$  
   
 - (a line can inserted with `***`)  
 ***   
 And don't forget about adding in figures to your markdown from files/images in your directory...  
   
 <center>  
+  
 ![**Pa'āni is *beautiful* (and **sassy**). Beware!](data/Paani.jpg){ width=30%}  
+  
 </center>  
+  
 Note in the code above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
 
 
