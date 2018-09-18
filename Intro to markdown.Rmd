@@ -3,15 +3,15 @@ title: "An introduction to R markdown"
 author: "C Wall"
 date: "9/18/2018"
 output:
+  pdf_document:
+    keep_tex: TRUE
   html_document:
     code_folding: hide
     toc: yes
     toc_depth: 4
     toc_float: yes
-  pdf_document:
-    keep_tex: TRUE
 ---
-```{r setup chunk, setup, include = FALSE, cache=TRUE, message=FALSE, warning=FALSE}
+```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
 # in this area (above you can put global options, such as "no warmings", "no messages")
 # you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
 # instead, use R projects and all your files will be in the location of your Project... see here
@@ -85,13 +85,26 @@ In the setup chunk (the first code chunk) you can set 'global' options, such as 
 
 - `fig.width=5, fig.height=3`: The (graphical device) size of R plots in inches. This records your output figure as a graphical device using *knitr* and will write this to files. There are other ways to edit figure size from this intial dimension (*see below*). You can also specify the two (width and height using) `fig.dim`, as in the previous examle `fig.dim = c(5, 3)`  
   
-- `out.width` and `out.height`: These set the output of a figure in output document. This is best to scale the image realtive to document dimensions, such as `out.width= '50%` would be 50% of page width.
+- `out.width` and `out.height`: These set the output of a figure in output document. This is best to scale the image realtive to document dimensions, such as `out.width= "50%"` would be 50% of page width.
 
 - `fig.align`: gives you figure alignment as either: right, center, left.  
   
 - `dev`: graphical devices, typically `png` (html) or `pdf` for LaTex.  
   
-- `fig.cap`: caption your figure
+- `fig.cap`: caption your figure  
+  
+- `fig.show`: options here control your figures. Setting to `'asis'` will show plots in the location they were generated (similar to R terminal--this is the default). If you set to `'hide'` then the figures are generated but not shown in your output file. Another option below is my favorite.
+  
+- `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
+  
+Now let's use some of these options to see how this code could be executed.
+```{r, fig.show='hold', out.width= "50%", fig.cap="**FIGURE EXAMPLE** *Side-by-side plots at 50% with a 'fig hold' option*"}
+data<-read.csv("data/coral_data.csv")
+par(mar = c(4, 4, 0.2, 0.1))
+plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen")
+plot(data$chla, pch=16, cex=1.2, col="coral")
+
+```
   
 
 #### Text formatting  
@@ -117,8 +130,13 @@ It is useful to understand how to modify text and format headings. You can do th
 ***  
 And don't forget about adding in figures to your markdown from files/images in your directory...  
   
-![Pa'āni is *beautiful* (and **sassy**)](data/Paani.jpg){ width=20% }  
+<center>  
   
+![Pa'āni is *beautiful* (and **sassy**)](data/Paani.jpg){ width=30%}  
+  
+</center>
+***  
+Note in the code above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
 
 
 
