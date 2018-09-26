@@ -3,13 +3,13 @@ title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
 date: "9/18/2018"
 output:
-  pdf_document:
-    keep_tex: TRUE
   html_document:
     code_folding: hide
     toc: yes
     toc_depth: 4
     toc_float: yes
+  pdf_document:
+    keep_tex: TRUE
 ---
 ```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
 # in this area (above you can put global options, such as "no warmings", "no messages")
