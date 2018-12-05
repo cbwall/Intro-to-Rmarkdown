@@ -17,12 +17,19 @@ output:
 # instead, use R projects and all your files will be in the location of your Project... see here
 
 # or you can set it like this...
-
-require("knitr")
+require('knitr')
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 getwd() # show me my working directory, this is where your R project and files are
 
+
+# for this lesson you will need to download the following packages
+# you can use:    install.packages("package name") if you don't have them already in your library
+
+library('knitr')
+library('lme4')
+library('lmerTest')
+library('effects')
 ```
 
 ## This is an R Markdown!
@@ -300,14 +307,6 @@ markdown makes running models easy. You can leave all candidate models in the sc
 **chlorophyll a model**
 Load packages and look at structure
 ```{r, results= "hide"}
-# for this lesson you will need to download the following packages
-# you can use:    install.packages("package name") if you don't have them already in your library
-
-library('lme4')
-library('lmerTest')
-library('effects')
-library('effects')
-
 str(data)
 data$Sample.ID<-as.factor(data$Sample.ID) # change 'Sample.ID' to a factor
 ```
