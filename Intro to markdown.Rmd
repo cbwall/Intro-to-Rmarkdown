@@ -3,13 +3,13 @@ title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
 date: "1/31/2019"
 output:
+  pdf_document:
+    keep_tex: TRUE
   html_document:
     code_folding: hide
     toc: yes
     toc_depth: 3
     toc_float: yes
-  pdf_document:
-    keep_tex: TRUE
 ---
 ```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
 # in this area (above you can put global options, such as "no warmings", "no messages")
@@ -223,7 +223,7 @@ PC.df<-data[(data$Species=="PC"),] ## Porites compress alone
 
 par(mar = c(4, 4, 3, 0.1))
 
-plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Figure 5. Tissue biomass in two coral species", cex.main=0.8, xlab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Figure example. Tissue biomass in two coral species", cex.main=0.8, xlab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
 lines(density(PC.df$biomass), lwd=2, col="darkslategray3", yaxt="n", ylab="", xaxt="n", xlab="")
 legend("topright", legend=c(expression(italic("Montipora capitata")), expression(italic("Porites compressa"))), lwd=2, col=c("darksalmon", "darkslategray3"), bty="n")
 
@@ -241,7 +241,7 @@ dev.off()
 ### Now let's play!
 In this chunk we will make use of some data of photopigments (Chlorophyll *a* concentrations cm^-2^) in bleached and pigmented corals. Some of the syntax here should be familiar...
 
-```{r chlorophyll a figure, results='hide', fig.align='center', fig.cap="**Figure 6. Chlorophyll a density**. *Note: This caption was set in code chunk setting*", fig.dim=c(4,4)}
+```{r chlorophyll a figure, results='hide', fig.align='center', fig.cap="**Figure 5. Chlorophyll a density**. *Note: This caption was set in code chunk setting*", fig.dim=c(4,4)}
 # message = FALSE to hide any messages with exporting the figure with dev.off(), or anything else that R may generate. If you set warning=FALSE, warnings will be hidden as well. 
 
 par(mfrow=c(1,1), pty="sq")
@@ -285,14 +285,14 @@ mean(chla)
   
 - execute and show code and SEE the figure I generate, but hide results (returned data)  
   `results='hide', fig.height=4, fig.width=4, fig.align='center'`
-```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 7. Boxplot of chlorophyll *a* data**"}
+```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 6. Boxplot of chlorophyll *a* data**"}
 
 par(mfrow=c(1,1))
 hist(chla, col="gray85", xlab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), cex.main=0.8, cex.axis=0.8, cex.lab=0.8)
 ```
   
 - make a two boxplots with "bleached" and "non-bleached" corals separated
-```{r, fig.height=4, fig.width=8, fig.align='center', fig.cap="**Figure 8. Boxplot of chlorophyll *a* data by physiological state**"}
+```{r, fig.height=4, fig.width=8, fig.align='center', fig.cap="**Figure 7. Boxplot of chlorophyll *a* data by physiological state**"}
 par(mfrow=c(1,2))
 # make figure 4 x 4 and center align
 hist(data$chla[data$Status=="B"], col="darksalmon", xlab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), main="Bleached coral", cex.main=0.8, cex.axis=0.8, cex.lab=0.8)
