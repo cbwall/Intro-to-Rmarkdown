@@ -6,7 +6,7 @@ output:
   html_document:
     code_folding: hide
     toc: yes
-    toc_depth: 4
+    toc_depth: 3
     toc_float: yes
   pdf_document:
     keep_tex: TRUE
@@ -81,7 +81,7 @@ output:
   html_document:  
   code_folding: hide  
   toc: yes  
-  toc_depth: 4  
+  toc_depth: 3  
   toc_float: yes 
 ***  
   
@@ -90,11 +90,12 @@ Let's go through this line by line...
 - `html_document`: an option you originally set when you open the markdown. This is how your file will be exported.  
 - `code_folding: hide` will allow you to *show* or *hide* all code (option at top of file)  
 - `toc`:  for table of contents on the left  
-- `toc_depth`:  how long you will have table of contents before folding over  
+- `toc_depth`:  how many header levels you will have in table of contents  
 - `toc_float`: lets your contents move as you advance in your document.  
   
 *Play around with these options, and see how they affect your code*  
 
+There are other options too, such as `number_sections: true` to add numbering to your sections.  
   
 ### The setup chunk
 - ` r setup `:  This is your set up code and is a useful way to get around the fact that knitr will look for your .Rmd file and all files in the this directory. By setting the root.dir you can force knitr to look for files in the directory you specify and the folders within.  
@@ -331,19 +332,22 @@ knitr::kable(data.table, digits = c(0,0,0,0, 3, 3))
   
 ## Running models
 
-markdown makes running models easy. You can leave all candidate models in the script or you can only report final models. In either case, it is an easy way to keep your data from analysis easy to understand and to QA/QC before publication
+Markdown makes running models easy. You can leave all candidate models in the script or you can only report final models. In either case, it is an easy way to keep your data from analysis easy to understand and to QA/QC before publication
 
-**chlorophyll a model**
-Load packages and look at structure
+### LME chlorophyll model
+Load packages and look at structure of dataframe: notice I am hiding these results with the `results= "hide"` option in the code chunk
 ```{r, results= "hide"}
 str(data)
 data$Sample.ID<-as.factor(data$Sample.ID) # change 'Sample.ID' to a factor
 ```
   
+
+### Fixed and random effects
 Run a linear mixed effect model, see the anova output, random effects, and plot effects
-```{r}
+
+```{r, fig.dim=c(8,4), fig.align='center', fig.cap="**Figure 9. Model output fixed effect plots**"}
 mod<-lmer(chla~Species+Site*Status+(1|Pair), data=data)
 anova(mod, type=2) # fixed effects
 ranova(mod) # random effects
-plot(allEffects(mod), ylab="total chlorophyll/cm2")
+plot(allEffects(mod), ylab="total chlorophyll/cm2", par.strip.text=list(cex=0.6))
 ```
