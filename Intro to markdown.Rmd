@@ -48,19 +48,22 @@ You can write code and execute functions in a similar way to normal R script fil
 The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain. In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
   
 Here are some common commands and examples of what Markdown can do for you. I reccommend visiting the [R Bookdown for a complete and exhaustive guide](https://bookdown.org/yihui/rmarkdown/ or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+    
+If you want to test yourself, the [R Markdown tutorial](https://www.markdowntutorial.com/) is another great guide.
+  
+## Markdown basics
   
   
-### Markdown basics
-  
-  
-#### First: Git with R Projects  
+### First: Git with R Projects  
 My first advise to you would be to set up a [GitHub account](https://github.com/). Having a GitHub allows you to have all your code, markdown, figures, data, etc archived online for safety and version control. You can make these repositories private or collaborative. It is easy! There are a lot of resources out there on why/how to use GitHub, and you'll see why it is important as you advance your carpentry--you can [read about how painless this is](http://happygitwithr.com/big-picture.html).
   
 Whether you choose to GIT with it, or stick with running from your device, you should start by making an *R project* in R-Studio. You can read all about how to do this at [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html). 
   
 In R Studio, clicking the option to make an R project with version control will set you on the path to linking with GitHub (if you go this route, see [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html) first, as you must set up a github account, then make a repository, then use the repository URL to link to your R project). 
   
-If you decide to instead without version control, then set up the project wherever you wish on your computer. When you set your "R Project" directory, R Studio will generate a folder that houses your R Project. From here you can create your Rmd file and folder directory as you wish. For best practices, I recomment setting up a directory for each project (*see directory for this project below*). From here, everytime you open want to work on this project in R studio, click on the Project. This will allow you to load data in a simple way that anyone can understand (i.e., upload file "symbiont.csv", from folder "data")--and it is easy to share this structure with collaborators. This eliminates the pesky and sometimes overly personal directories we all have on our desktop aka: "~/Desktop/PhD/WTFproject/NeverGoingToGetPublished/data.csv"
+If you decide to instead without version control, then set up the project wherever you wish on your computer. When you set your "R Project" directory, R Studio will generate a folder that houses your R Project. From here you can create your Rmd file and folder directory as you wish. For best practices, I recomment setting up a directory for each project (*see directory for this project below*). From here, everytime you open want to work on this project in R studio, click on the Project. This will allow you to load data in a simple way that anyone can understand (i.e., upload file "symbiont.csv", from folder "data")--and it is easy to share this structure with collaborators.  
+  
+Yet another reason to use R Projects: it will eliminate the pesky and sometimes overly personal directories we all have on our desktop aka: "~/Desktop/PhD/WTFproject/NeverGoingToGetPublished/data.csv"
   
 <center>  
   
@@ -69,7 +72,7 @@ If you decide to instead without version control, then set up the project wherev
 </center>  
   
   
-#### Common Commands 
+### Common Commands 
 
 *Notice the script at the very top of your markdown (this is not standard, but is customized)*  
 
@@ -93,7 +96,7 @@ Let's go through this line by line...
 *Play around with these options, and see how they affect your code*  
 
   
-#### The setup chunk
+### The setup chunk
 - ` r setup `:  This is your set up code and is a useful way to get around the fact that knitr will look for your .Rmd file and all files in the this directory. By setting the root.dir you can force knitr to look for files in the directory you specify and the folders within.  
 
 In the setup chunk (the first code chunk) you can set 'global' options, such as message/warning exclusion, or hiding results or outputs.  
@@ -107,62 +110,8 @@ In the setup chunk (the first code chunk) you can set 'global' options, such as 
 
 - `results='hide'`: this will hide all results in a code chunk, or any returned results from your commands.  
   
-  
-#### Figure formatting
-- `fig.show=FALSE`: this will hide the figures you generate. This may be useful for some of those assumptions of ANOVA-- you want to see it, but do you want all of them in your final archived datafile? Maybe not.  
-
-- `fig.width=5, fig.height=3`: The (graphical device) size of R plots in inches. This records your output figure as a graphical device using *knitr* and will write this to files. There are other ways to edit figure size from this intial dimension (*see below*). You can also specify the two (width and height using) `fig.dim`, as in the previous examle `fig.dim = c(5, 3)`  
-  
-- `out.width` and `out.height`: These set the output of a figure in output document. This is best to scale the image realtive to document dimensions, such as `out.width= "50%"` would be 50% of page width.
-
-- `fig.align`: gives you figure alignment as either: right, center, left.  
-  
-- `dev`: graphical devices, typically `png` (html) or `pdf` for LaTex.  
-  
-- `fig.cap`: caption your figure  
-  
-- `fig.show`: options here control your figures. Setting to `'asis'` will show plots in the location they were generated (similar to R terminal--this is the default). If you set to `'hide'` then the figures are generated but not shown in your output file. Another option below is my favorite.
-  
-- `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
-  
-Now let's use some of these options to see how this code could be executed.
-```{r, fig.show='hold', out.width= "50%", fig.align='center', fig.cap="**Figure 2. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
-data<-read.csv("data/coral_data.csv")
-par(mar = c(4, 4, 0.2, 0.1))
-plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
-     ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
-plot(data$chla, pch=16, cex=1.2, col="coral",
-      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
-
-```
-  
-  
-  
-But something to consider... R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.
-```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap=""}
-# use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
-
-MC.df<-data[(data$Species=="MC"),] ## Montipora capitata alone
-PC.df<-data[(data$Species=="PC"),] ## Porites compress alone
-
-par(mar = c(4, 4, 3, 0.1))
-
-plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Figure 3. Tissue biomass in two coral species", xlab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
-lines(density(PC.df$biomass), lwd=2, col="darkslategray3", yaxt="n", ylab="", xaxt="n", xlab="")
-legend("topright", legend=c(expression(italic("Montipora capitata")), expression(italic("Porites compressa"))), lwd=2, col=c("darksalmon", "darkslategray3"), bty="n")
-
-
-# how to export the figure you made--first print it, then save the device
-# many ways to do this, but this one works well in Markdown
-# notice you are specifying the folder ('figures'), which is where the figure will be exported to
-
-dev.print(pdf, "figures/biomass in two species.pdf", encod="MacRoman", height=4, width=6) # export in directory
-dev.off()
-
-```
-  
-  
-#### Text formatting  
+   
+### Text formatting  
 It is useful to understand how to modify text and format headings. You can do this in a variety of ways.    
 
 - `line break`: this is executed by two spaces at the end of previous line, and a return     
@@ -181,37 +130,24 @@ It is useful to understand how to modify text and format headings. You can do th
   
 - `inline equation`: $A = \pi*r^{2}$ or $y = a*x+ b$  
   
-- (a line can inserted with `***`)  
+- (a line can inserted with `***`) 
+  
+- using the `>` before and after a line can give you a quote/emphasis, such as...  
+  
+> "Its Van Halen, not Van Hagar!"   
+> - Garth Algar
+
+
 ***   
 
   
-#### Including figures
-You can include figures from script output as results, or figures from files in your directory. First, let's see how you can add an image from a file to your markdown.
-
-<center>  
-
-![**Figure 4. This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)**](data/M cap bleached.jpg){ width=50% }
-
-</center>  
-
-Adding figures this way can help you present your results for GIS maps that may have been rendered outside of R, or imagery that you want to include of your study organisms, etc.
+### Code chunks
   
-<center>  
-  
-![**Figure 5.  Pa'āni is *beautiful* (and sassy). Beware!**](data/Paani.jpg){ width=30%}  
-  
-</center>  
-  
-Note in the coding above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
-
-
-  
-#### Code chunks
+Code chunks are where your code is executed. If you do not set the working directory in *setup* each code chunk will revert to its original directory, or where your .Rmd file lives. This is one more reason why you should run everything out of your R Project.  
 ```{r}
 ## love your data and it will love you back
 getwd() #where are your files? See how they should all be running from your R project in the directory
 ``` 
-Code chunks are where your code is executed. If you do not set the working directory in *setup* each code chunk will revert to its original directory, or where your .Rmd file lives. This is one more reason why you should run everything out of your R Project.  
   
 Below: This is a code chunk, and this is how you enter your data into R markdown. Note the `code chunks` always start with a ` ```{r...}` and ends with a `{...}`  
   
@@ -228,7 +164,79 @@ data<-read.csv("data/coral_data.csv")
 names(data)
 ```
   
-    
+   
+### Including figures
+You can include figures from script output as results, or figures from files in your directory. First, let's see how you can add an image from a file to your markdown.
+
+<center>  
+
+![**Figure 2. This is a figure of a bleached *Montipora capitata* coral during the 2014 bleaching event in Kāne'ohe Bay, O'ahu, Hawai'i. (PC: CB Wall)**](data/M cap bleached.jpg){ width=50% }
+
+</center>  
+
+Adding figures this way can help you present your results for GIS maps that may have been rendered outside of R, or imagery that you want to include of your study organisms, etc.
+  
+<center>  
+  
+![**Figure 3.  Pa'āni is *beautiful* (and sassy). Beware!**](data/Paani.jpg){ width=30%}  
+  
+</center>  
+  
+Note in the coding above I used the html codes for centering the image and the caption. You must leave a line between the first html call `<center>`, the caption and image code, and the end html code line of `</center>`.
+
+
+### Figure formatting
+- `fig.show=FALSE`: this will hide the figures you generate. This may be useful for some of those assumptions of ANOVA-- you want to see it, but do you want all of them in your final archived datafile? Maybe not.  
+
+- `fig.width=5, fig.height=3`: The (graphical device) size of R plots in inches. This records your output figure as a graphical device using *knitr* and will write this to files. There are other ways to edit figure size from this intial dimension (*see below*). You can also specify the two (width and height using) `fig.dim`, as in the previous examle `fig.dim = c(5, 3)`  
+  
+- `out.width` and `out.height`: These set the output of a figure in output document. This is best to scale the image realtive to document dimensions, such as `out.width= "50%"` would be 50% of page width.
+
+- `fig.align`: gives you figure alignment as either: right, center, left.  
+  
+- `dev`: graphical devices, typically `png` (html) or `pdf` for LaTex.  
+  
+- `fig.cap`: caption your figure  
+  
+- `fig.show`: options here control your figures. Setting to `'asis'` will show plots in the location they were generated (similar to R terminal--this is the default). If you set to `'hide'` then the figures are generated but not shown in your output file. Another option below is my favorite.
+  
+- `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
+  
+Now let's use some of these options to see how this code could be executed.
+```{r, fig.show='hold', out.width= "50%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
+data<-read.csv("data/coral_data.csv")
+par(mar = c(4, 6, 0.2, 0.1))
+plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
+     ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+plot(data$chla, pch=16, cex=1.2, col="coral",
+      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+```
+  
+  
+But something to consider... R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.
+```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap=""}
+# use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
+
+MC.df<-data[(data$Species=="MC"),] ## Montipora capitata alone
+PC.df<-data[(data$Species=="PC"),] ## Porites compress alone
+
+par(mar = c(4, 4, 3, 0.1))
+
+plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Figure 5. Tissue biomass in two coral species", cex.main=0.8, xlab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+lines(density(PC.df$biomass), lwd=2, col="darkslategray3", yaxt="n", ylab="", xaxt="n", xlab="")
+legend("topright", legend=c(expression(italic("Montipora capitata")), expression(italic("Porites compressa"))), lwd=2, col=c("darksalmon", "darkslategray3"), bty="n")
+
+
+# how to export the figure you made--first print it, then save the device
+# many ways to do this, but this one works well in Markdown
+# notice you are specifying the folder ('figures'), which is where the figure will be exported to
+
+dev.print(pdf, "figures/biomass in two species.pdf", encod="MacRoman", height=4, width=6) # export in directory
+dev.off()
+
+```
+
+ 
 ### Now let's play!
 In this chunk we will make use of some data of photopigments (Chlorophyll *a* concentrations cm^-2^) in bleached and pigmented corals. Some of the syntax here should be familiar...
 
@@ -276,14 +284,14 @@ mean(chla)
   
 - execute and show code and SEE the figure I generate, but hide results (returned data)  
   `results='hide', fig.height=4, fig.width=4, fig.align='center'`
-```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 6. Boxplot of chlorophyll *a* data**"}
+```{r, results='hide', fig.height=4, fig.width=4, fig.align='center', fig.cap="**Figure 7. Boxplot of chlorophyll *a* data**"}
 
 par(mfrow=c(1,1))
 hist(chla, col="gray85", xlab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), cex.main=0.8, cex.axis=0.8, cex.lab=0.8)
 ```
   
 - make a two boxplots with "bleached" and "non-bleached" corals separated
-```{r, fig.height=4, fig.width=8, fig.align='center', fig.cap="**Figure 7. Boxplot of chlorophyll *a* data by physiological state**"}
+```{r, fig.height=4, fig.width=8, fig.align='center', fig.cap="**Figure 8. Boxplot of chlorophyll *a* data by physiological state**"}
 par(mfrow=c(1,2))
 # make figure 4 x 4 and center align
 hist(data$chla[data$Status=="B"], col="darksalmon", xlab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), main="Bleached coral", cex.main=0.8, cex.axis=0.8, cex.lab=0.8)
@@ -292,7 +300,8 @@ hist(data$chla[data$Status=="NB"], col="darkslategray3", xlab=expression(paste("
 
 ... or just print the figure with `echo=FALSE` sans the code
 ```{r, echo=FALSE, fig.height=4, fig.width=6, fig.align='center', fig.cap="**Figure 8. Separate boxplots of chlorophyll *a* among three reef sites**"}
-plot(chla~Site, data=data, col="mediumseagreen",
+par(mar = c(4, 6, 3, 0.1))
+plot(chla~Site, data=data, col="aliceblue",
      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
 # make figure 4 x 6 and center align
 ```
