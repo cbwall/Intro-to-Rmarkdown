@@ -3,13 +3,13 @@ title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
 date: "1/31/2019"
 output:
-  pdf_document:
-    keep_tex: TRUE
   html_document:
     code_folding: hide
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    keep_tex: TRUE
 ---
 ```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
 # in this area (above you can put global options, such as "no warmings", "no messages")
@@ -98,6 +98,8 @@ Let's go through this line by line...
 There are other options too, such as `number_sections: true` to add numbering to your sections.  
   
 ### The setup chunk
+- First, if you want to make a new chunk (where code is written), use the shortcut! `Control + Option + I"` will generate a new chunk for you 
+  
 - ` r setup `:  This is your set up code and is a useful way to get around the fact that knitr will look for your .Rmd file and all files in the this directory. By setting the root.dir you can force knitr to look for files in the directory you specify and the folders within.  
 
 In the setup chunk (the first code chunk) you can set 'global' options, such as message/warning exclusion, or hiding results or outputs.  
@@ -204,9 +206,13 @@ Note in the coding above I used the html codes for centering the image and the c
 - `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
   
 Now let's use some of these options to see how this code could be executed.
-```{r, fig.show='hold', out.width= "50%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
+```{r first plot example, fig.show='hold', out.width= "20%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
 data<-read.csv("data/coral_data.csv")
 par(mar = c(4, 6, 0.2, 0.1))
+plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
+     ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+plot(data$chla, pch=16, cex=1.2, col="coral",
+      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
 plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
      ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
 plot(data$chla, pch=16, cex=1.2, col="coral",
