@@ -332,20 +332,14 @@ data.table<-cbind(chl.mean[, c(1:5)], biomass.mean[,5])
 colnames(data.table)<-c("Time Point", "Site", "Species", "Status", "mean chla", "mean AFDW")
 knitr::kable(data.table, digits = c(0,0,0,0, 3, 3))
 
-#other quick methods for summary tables using 'tidyverse'
+############
+# other using methods for summary tables using 'tidyverse' dplyr
 data.table2<- data %>% dplyr::select(Time.point, Site, Species, Status, chla, biomass) %>%
   group_by(Time.point, Site, Species)%>%
   summarise(mean.chla=mean(chla), mean.AFDW= mean(biomass), 
             SE.chla=std.error(chla), SE.AFDW=std.error(biomass))
 
-knitr::kable(data.table2, digits = c(0,0,0, 3, 3, 3, 3),
-             col.names = c("Time",
-                           "Site",
-                           "Species",
-                           "chla",
-                           "biomass",
-                           "SE-chla",
-                           "SE-biomass"))
+# knitr::kable(data.table2, digits = c(0,0,0, 3, 3, 3, 3), col.names = c("Time", "Site", "Species", "chla", "biomass", "SE-chla", "SE-biomass"))
 ```
   
   
