@@ -1,7 +1,7 @@
 ---
 title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
-date: "1/31/2019"
+date: "10/15/2019"
 output:
   html_document:
     code_folding: hide
@@ -12,25 +12,23 @@ output:
     keep_tex: TRUE
 ---
 ```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
+# for this lesson you will need to download the following packages
+# if you don't have them already in your library, the following code can be used
+# this will install the package if it does not already exist on your machine
+
+
+# load packages
+if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix')
+
 # in this area (above you can put global options, such as "no warmings", "no messages")
 # you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
 # instead, use R projects and all your files will be in the location of your Project... see here
 
 # or you can set it like this...
-if (!require('knitr')) install.packages('knitr'); library('knitr')
-
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
 getwd() # show me my working directory, this is where your R project and files are
-
-# for this lesson you will need to download the following packages
-# if you don't have them already in your library, the following code can be used
-# this will install the package if it does not already exist on your machine
-
-if (!require('lme4')) install.packages('lme4'); library('lme4')
-if (!require('lmerTest')) install.packages('lmerTest'); library('lmerTest')
-if (!require('effects')) install.packages('effects'); library('effects')
-
 ```
 
 ## This is an R Markdown!
@@ -152,7 +150,7 @@ Code chunks are where your code is executed. If you do not set the working direc
 getwd() #where are your files? See how they should all be running from your R project in the directory
 ``` 
   
-Below: This is a code chunk, and this is how you enter your data into R markdown. Note the `code chunks` always start with a ` ```{r...}` and ends with a `{...}`  
+Below: This is a code chunk, and this is how you enter your data into R markdown. Note the `code chunks` always start with a ` ```{r...}` and ends with a `{...}`. You can add these chunks with the shortcut `Control + Option + I"`.  
   
 The code chunk below is an example of attaching the data (.csv), familiar to you R-heads. Since the data file is in the directory specified by ` knitr::opts_knit$set(root.dir =... ` above, you can reference the .csv easily.
 
@@ -321,7 +319,7 @@ plot(chla~Site, data=data, col="darkseagreen1")
   
 ### Make a table of summary data
 plot raw data 'as is'
-```{r, 'as.is'}
+```{r, as.is}
 knitr::kable(data[c(1:5), c(1:10)], digits = c(0, 0, 0, 0, 0, 0, 0, 3, 3, 3))
 # the digits call here is specifying the # of decimals for each column
 ```
@@ -333,6 +331,21 @@ biomass.mean<-aggregate(biomass~Time.point + Site + Species + Status, data, mean
 data.table<-cbind(chl.mean[, c(1:5)], biomass.mean[,5])
 colnames(data.table)<-c("Time Point", "Site", "Species", "Status", "mean chla", "mean AFDW")
 knitr::kable(data.table, digits = c(0,0,0,0, 3, 3))
+
+#other quick methods for summary tables using 'tidyverse'
+data.table2<- data %>% dplyr::select(Time.point, Site, Species, Status, chla, biomass) %>%
+  group_by(Time.point, Site, Species)%>%
+  summarise(mean.chla=mean(chla), mean.AFDW= mean(biomass), 
+            SE.chla=std.error(chla), SE.AFDW=std.error(biomass))
+
+knitr::kable(data.table2, digits = c(0,0,0, 3, 3, 3, 3),
+             col.names = c("Time",
+                           "Site",
+                           "Species",
+                           "chla",
+                           "biomass",
+                           "SE-chla",
+                           "SE-biomass"))
 ```
   
   
