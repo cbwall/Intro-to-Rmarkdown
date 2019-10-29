@@ -3,8 +3,6 @@ title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
 date: "10/15/2019"
 output:
-  pdf_document:
-    keep_tex: TRUE
   html_document:
     code_folding: hide
     toc: yes
@@ -26,9 +24,9 @@ pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix')
 # instead, use R projects and all your files will be in the location of your Project... see here
 
 # or you can set it like this...
-knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+#knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
-getwd() # show me my working directory, this is where your R project and files are
+#getwd() # show me my working directory, this is where your R project and files are
 ```
 
 ## This is an R Markdown!
@@ -323,6 +321,7 @@ plot raw data 'as is'
 knitr::kable(data[c(1:5), c(1:10)], digits = c(0, 0, 0, 0, 0, 0, 0, 3, 3, 3))
 # the digits call here is specifying the # of decimals for each column
 ```
+
   
 Or make summary data and include this table in your markdown
 ```{r}
