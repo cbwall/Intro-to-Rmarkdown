@@ -108,6 +108,8 @@ In the setup chunk (the first code chunk) you can set 'global' options, such as 
 - `echo=FALSE`:  this will show the output but not the code chunk...  notice the difference.
 
 - `results='hide'`: this will hide all results in a code chunk, or any returned results from your commands.  
+
+- `collapse = TRUE`: this is one of my new favorites. You enter this to your chunk options for a code chunk to run all the way through and not separate into pieces of results. This is usueful if you have lots of outputs (even if they are hidden using `results='hide'`, the code chunk will still give breaks where results would be. Collapse = TRUE stops this.)
   
    
 ### Text formatting  
