@@ -123,6 +123,8 @@ It is useful to understand how to modify text and format headings. You can do th
   
 - `Superscript` superscript^2^ or `strikethroughs`  ~~strikethrough~~ can also be useful text modifiers.  
   
+- `Subscript` subscript~2~ are another useful one for chemistry CO~2~, NO~3~^-^, and the like... 
+  
 - `add links` to urls like this [R studio link](www.rstudio.com)  
   
 - `endash` : --   
