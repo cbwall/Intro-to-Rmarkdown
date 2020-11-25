@@ -1,6 +1,6 @@
 ---
 title: "Gettin' groovy with Bookdown"
-author: "C Wall"
+author: "CB Wall -- cbwall@hawaii.edu"
 date: "11/25/2020"
 output:
   bookdown::pdf_document2: default
@@ -20,8 +20,9 @@ if (!require("pacman")) install.packages("pacman") # for rapid install if not in
 # use pacman to load all the packages you are missing!
 pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix', 'car', 'bookdown')
 ```
-###Git up! BookDowwwwwn! 
-  
+# Main text {-}
+ 
+**Git up! BookDowwwwwn!**  
 For the advanced Markdown-ers, you can also write and code a manuscript in markdown that can be exported to Word, with references embedded. Markdown magic! [R markdown: Publsihing workflows and manuscript.](https://danovando.github.io/publications-with-rmarkdown/presentations/pubs-with-rmarkdown)
   
 I've found this does not work for html--which is fine--but the pdf and word outputs seem to flow quite well. Make sure to load the package `bookdown` and set the options for output at the top of the Markdown script as I have above-- with   
@@ -45,7 +46,7 @@ par(new=T)
 lines(density(data$chla),lwd=3,col="mediumseagreen")
 ```
   
-Notice the text updates to show *Figure 1* and the code chunk (displayed above) produced the figure and adds the *Figrue 1* tot he caption, despite the fact that I did not directly name it Figure 1 using `fig.cap`. This is great because now R will reference these figures chronologically and link the # to the code chunk name. If a reviewer says, "I think this should be moved to the supplement and have a new Figure 1," we can do that easily. It would require moving the order of chunks around, but that is doable. 
+Notice the text updates to show *Figure 1* and the code chunk (displayed above) produced the figure and adds the *Figure 1* to the caption, despite the fact that I did not directly name it Figure 1 using `fig.cap`. This is great because now R will reference these figures chronologically and link the # to the code chunk name. If a reviewer says, "I think this should be moved to the supplement and have a new Figure 1," we can do that easily enough.
   
 Let's try... making another figure, this one will be figure 2--as per reviewer requests
 
@@ -80,4 +81,5 @@ lines(density(data$chla),lwd=3,col="mediumseagreen")
 ```
   
   
-If you knitted this for the first time, looked at the output, and  said "Holy SH*T!"... I did too! 
+If you knitted this for the first time, looked at the output, and  said "Holy SH*T!"... I did too!  
+Now a warning, if you knit the above with the `header-includes` segment, this may only export the way you wish for pdfs. So if exporting to word is what you want to do, there are some caveates--which might mean moving the order of chunks around so that they can be listed chronologically. BUT that is doable.  You can see more on this at [Stack Overflow](https://stackoverflow.com/questions/50223141/rmarkdown-bookdown-separate-figure-numbering-for-supplemental-section), where I got the `header-includes` info...
