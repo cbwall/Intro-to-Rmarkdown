@@ -1,7 +1,7 @@
 ---
 title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
-date: "10/15/2019"
+date: "11/25/2020"
 output:
   html_document:
     code_folding: hide
@@ -10,23 +10,29 @@ output:
     toc_float: yes
 ---
 ```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
+if (!require('knitr')) install.packages('knitr'); library('knitr')
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
+
+# you will need 'knitr' to make your codes 'knit' and we are setting some global options here for the chunks to not display warnings and messages in out final output--also we want figures to be in the center. Although could be set to 'left' or 'right' as well. 
+
+# ^^^ above: you can put global options, such as "no warmings", "no messages"
+# ^^^ you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
+# BUT instead, use R projects and all your files will be in the location of your Project... 
+
+# getwd() # show me my working directory, this is where your R project and files are
+
+########## Load packages
+
 # for this lesson you will need to download the following packages
 # if you don't have them already in your library, the following code can be used
 # this will install the package if it does not already exist on your machine
 
-
 # load packages
 if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
-pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix')
 
-# in this area (above you can put global options, such as "no warmings", "no messages")
-# you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
-# instead, use R projects and all your files will be in the location of your Project... see here
+# use pacman to load all the packages you are missing!
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix', 'car', 'bookdown')
 
-# or you can set it like this...
-#knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-
-#getwd() # show me my working directory, this is where your R project and files are
 ```
 
 ## This is an R Markdown!
@@ -45,7 +51,10 @@ The benefit of using markdown with colleagues is they can actually see the scrip
   
 Here are some common commands and examples of what Markdown can do for you. I reccommend visiting the [R Bookdown for a complete and exhaustive guide](https://bookdown.org/yihui/rmarkdown/ or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
     
-If you want to test yourself, the [R Markdown tutorial](https://www.markdowntutorial.com/) is another great guide.
+If you want to test yourself, the [R Markdown tutorial](https://www.markdowntutorial.com/) is another great guide.  
+  
+For the advanced Markdown-ers, you can also write and code a manuscript in markdown that can be exported to Word, with references embedded. Markdown magic! [R markdown: Publsihing workflows and manuscript.](https://danovando.github.io/publications-with-rmarkdown/presentations/pubs-with-rmarkdown)
+  
   
 ## Markdown basics
   
@@ -220,7 +229,20 @@ plot(data$chla, pch=16, cex=1.2, col="coral",
 ```
   
   
-But something to consider... R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.
+Let's try another plot and set the dimensions to 5" wide and 3" tall 
+```{r test-plot, fig.cap = "Figure 5. Chlorophyll *a* boxplot", fig.dim=c(5,3)}
+hist(data$chla, col="seagreen", freq=F, main="Chlorophylls in coral symbionts", ylab="density",
+      xlab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+par(new=T)
+lines(density(data$chla),lwd=3,col="mediumseagreen")
+```
+  
+  
+But something to consider... 
+  
+R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.  
+  
+Let's run this code chunk but set an option for no figure caption.
 ```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap=""}
 # use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
 

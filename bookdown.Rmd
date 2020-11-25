@@ -1,0 +1,83 @@
+---
+title: "Gettin' groovy with Bookdown"
+author: "C Wall"
+date: "11/25/2020"
+output:
+  bookdown::pdf_document2: default
+  bookdown::word_document2: default
+  bookdown::html_document2: default
+linkcolor: blue
+header-includes: 
+  \newcommand{\beginsupplement}{\setcounter{table}{0}  \renewcommand{\thetable}{S\arabic{table}} \setcounter{figure}{0} \renewcommand{\thefigure}{S\arabic{figure}}}
+---
+```{r setup chunk, setup, include = FALSE, cache=FALSE, message=FALSE, warning=FALSE}
+if (!require('knitr')) install.packages('knitr'); library('knitr')
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
+
+# load packages
+if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
+
+# use pacman to load all the packages you are missing!
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix', 'car', 'bookdown')
+```
+###Git up! BookDowwwwwn! 
+  
+For the advanced Markdown-ers, you can also write and code a manuscript in markdown that can be exported to Word, with references embedded. Markdown magic! [R markdown: Publsihing workflows and manuscript.](https://danovando.github.io/publications-with-rmarkdown/presentations/pubs-with-rmarkdown)
+  
+I've found this does not work for html--which is fine--but the pdf and word outputs seem to flow quite well. Make sure to load the package `bookdown` and set the options for output at the top of the Markdown script as I have above-- with   
+`output:`  
+  `bookdown::word_document2: default`  
+  `bookdown::pdf_document2: default`   
+  `bookdown::html_document2: default`  
+  
+Let's try to embed a figure in the document we are making now. If I wanted the reference to the figure to go chronological in the code (1 to the nth) and I name the code chunk accordingly, we can 'call the chunk' using a reference!   
+  
+This uses the package `bookdown` and this approach is called `cross referencing`. It works by typing `\@ref(ref-type:chunk-name)`, which produces a linked number to the referenced object. Let's try one, here using *ref-type* = "fig" and the *code chunk name* = "test-fig".  **Note** the code chunk name must not have spaces. Let's start a new page and call the code chunk
+
+\newpage
+  
+**Chlorophyll?! More like bore-o-phyll! (Fig.\@ref(fig:test-plot)).**
+```{r test-plot, fig.cap = "Chlorophyll *a* boxplot", fig.dim=c(5,3), fig.align='center'}
+data<-read.csv("data/coral_data.csv")
+hist(data$chla, col="seagreen", freq=F, main="Chlorophylls in coral symbionts", ylab="density",
+      xlab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+par(new=T)
+lines(density(data$chla),lwd=3,col="mediumseagreen")
+```
+  
+Notice the text updates to show *Figure 1* and the code chunk (displayed above) produced the figure and adds the *Figrue 1* tot he caption, despite the fact that I did not directly name it Figure 1 using `fig.cap`. This is great because now R will reference these figures chronologically and link the # to the code chunk name. If a reviewer says, "I think this should be moved to the supplement and have a new Figure 1," we can do that easily. It would require moving the order of chunks around, but that is doable. 
+  
+Let's try... making another figure, this one will be figure 2--as per reviewer requests
+
+*We have appeased the reviewer with this fatted calf and a blood offering. We hope this new data with satiate the appetite of the reviewer*.  Please see (Fig.\@ref(fig:biomass)), which is awesome, and chlorophyll data now in the supplement.
+```{r biomass, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap="Coral tissue biomass", echo=FALSE}
+# use results="hide" here to suppress messages associate with "dev.off" and dev.print to save figure
+
+MC.df<-data[(data$Species=="MC"),] ## Montipora capitata alone
+PC.df<-data[(data$Species=="PC"),] ## Porites compress alone
+
+par(mar = c(4, 4, 3, 0.1))
+
+plot(density(MC.df$biomass), lwd=2, col="darksalmon", xlim=c(0,100), main="Tissue biomass in two coral species", cex.main=0.8, xlab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+lines(density(PC.df$biomass), lwd=2, col="darkslategray3", yaxt="n", ylab="", xaxt="n", xlab="")
+legend("topright", legend=c(expression(italic("Montipora capitata")), expression(italic("Porites compressa"))), lwd=2, col=c("darksalmon", "darkslategray3"), bty="n")
+
+
+```
+
+
+\newpage
+# Supplementary material {-}
+
+\beginsupplement
+Here is the chlorophyll data in a new section, with numbers restarted. We accomplished this by using the `header` information in the top of the script.  (Fig.\@ref(fig:test-plot2)).
+```{r test-plot2, fig.cap = "Chlorophyll *a* boxplot", fig.dim=c(5,3), fig.align='center', echo=FALSE}
+data<-read.csv("data/coral_data.csv")
+hist(data$chla, col="seagreen", freq=F, main="Chlorophylls in coral symbionts", ylab="density",
+      xlab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+par(new=T)
+lines(density(data$chla),lwd=3,col="mediumseagreen")
+```
+  
+  
+If you knitted this for the first time, looked at the output, and  said "Holy SH*T!"... I did too! 
