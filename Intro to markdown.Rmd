@@ -1,7 +1,7 @@
 ---
 title: "An introduction to R markdown"
 author: "Chris B. Wall -- chris.wall@hawaii.edu"
-date: "11/25/2020"
+date: "03/05/2020"
 output:
   html_document:
     code_folding: hide
@@ -36,6 +36,7 @@ pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix', 'car'
 ```
 
 ## This is an R Markdown!
+*Please see the video here on how to download repository and get set up* **https://www.youtube.com/watch?v=MIxZdjMa5eo** 
 
 R markdown is great, and when I say great, **I mean REALLY great.**   
   
