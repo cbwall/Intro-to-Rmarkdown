@@ -384,7 +384,6 @@ Markdown makes running models easy. You can leave all candidate models in the sc
 Load packages and look at structure of dataframe: notice I am hiding these results with the `results= "hide"` option in the code chunk
 ```{r, results= "hide"}
 str(data)
-data$Sample.ID<-as.factor(data$Sample.ID) # change 'Sample.ID' to a factor
 ```
   
 
