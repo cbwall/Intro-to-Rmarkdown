@@ -31,7 +31,8 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
 if (!require("pacman")) install.packages("pacman") # for rapid install if not in library
 
 # use pacman to load all the packages you are missing!
-pacman::p_load('knitr', 'lme4', 'lmerTest', 'effects', 'dplyr', 'plotrix', 'car', 'bookdown')
+pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'magrittr', 'effects', 'dplyr', 
+               'plotrix', 'car', 'bookdown')
 
 ```
 
@@ -157,6 +158,7 @@ It is useful to understand how to modify text and format headings. You can do th
 ### Code chunks
   
 Code chunks are where your code is executed. If you do not set the working directory in *setup* each code chunk will revert to its original directory, or where your .Rmd file lives. This is one more reason why you should run everything out of your R Project.  
+
 ```{r}
 ## love your data and it will love you back
 getwd() #where are your files? See how they should all be running from your R project in the directory
@@ -174,6 +176,11 @@ The code chunk below is an example of attaching the data (.csv), familiar to you
 
 # data file is in the folder 'data', within main working directory
 data<-read.csv("data/coral_data.csv")
+
+# set factor levels
+cols <- c("Time.point", "Period", "Site", "Species", "Status", "Sample.ID")
+data %>% mutate_at(cols, funs(factor(.)))
+
 names(data)
 ```
   
@@ -216,11 +223,11 @@ Note in the coding above I used the html codes for centering the image and the c
 - `fig.show='hold'`: this is a really cool option. This option holds you plots and doesn't display until the end of the code chunk. You can use it to place multiple figures side-by-side as long as the `out.width` is called. For example, two plots side-by-side at `out.widh="50%"`  
   
 Now let's use some of these options to see how this code could be executed.
-```{r first plot example, fig.show='hold', out.width= "20%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
+```{r first plot example, fig.show='hold', out.width= "30%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
 data<-read.csv("data/coral_data.csv")
 par(mar = c(4, 6, 0.2, 0.1))
-plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
-     ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+#plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
+     #ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
 plot(data$chla, pch=16, cex=1.2, col="coral",
       ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
 plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
