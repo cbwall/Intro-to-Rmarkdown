@@ -232,7 +232,6 @@ Note in the coding above I used the html codes for centering the image and the c
   
 Now let's use some of these options to see how this code could be executed.
 ```{r first plot example, fig.show='hold', out.width= "30%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
-data<-read.csv("data/coral_data.csv")
 par(mar = c(4, 6, 0.2, 0.1))
 #plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
      #ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
