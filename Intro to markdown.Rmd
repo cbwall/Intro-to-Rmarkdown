@@ -49,7 +49,8 @@ When exporting your markdown you can...
   
 You can write code and execute functions in a similar way to normal R script files. However, there are a few distinct differences between R scripts and R markdown scripts. Some of these differences relate to how code is executed. Other differences can be seen in the added benefit of integrating scripts with outputs and other embedded properties.  
 
-The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain. In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
+The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain.  
+In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
   
 Here are some common commands and examples of what Markdown can do for you. I reccommend visiting the [R Bookdown for a complete and exhaustive guide](https://bookdown.org/yihui/rmarkdown/ or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
     
@@ -60,18 +61,18 @@ For the advanced Markdown-ers, you can also write and code a manuscript in markd
   
 ## Markdown basics
   
-Before we get started, let us discuss version control and software carpentry. It is increasingly important for you to back up and secure your data. This is not only true for your final data but also the versions of your data on the way to the "ultimate" data version. Think of this as a software update. First, you need to have a version of the software; this version may change as your team/PI/committee or others as for changes to your code. You can then update your code to reflect new needs, while also maintaining an archive or what the code WAS. This is in effect: version control. It helps you back up your work and maintain an archive of where you were and where you are.  
+Before we get started, **let us discuss version control and software carpentry**. It is increasingly important for you to back up and secure your data. This is not only true for your final data but also the versions of your data on the way to the "ultimate" data version. Think of this as a software update. First, you need to have a version of the software; this version may change as your team/PI/committee or others as for changes to your code. You can then update your code to reflect new needs, while also maintaining an archive or what the code WAS. This is in effect: version control. It helps you back up your work and maintain an archive of where you were and where you are.  
 Now, carpentry. Having a simple, clear directory of data folders is critical for making your data structure navigable. This is general house keeping for your directory. It will make your code, output, and products flow and keep your directory clean and organized. 
   
 Is this all above your head? That's okay. See some open access resources here to help you get started in R (notice the pages are all R-Markdown html objects!) and on the path to coding. [R data carpentry course](https://datacarpentry.org/R-ecology-lesson/index.html).
   
   
 ### First: Git with R Projects  
-My first advise to you would be to set up a [GitHub account](https://github.com/). Having a GitHub allows you to have all your code, markdown, figures, data, etc archived online for safety and version control. You can make these repositories private or collaborative. It is easy! There are a lot of resources out there on why/how to use GitHub, and you'll see why it is important as you advance your carpentry--you can [read about how painless this is](http://happygitwithr.com/big-picture.html).
+My first advise to you would be to set up a [GitHub account](https://github.com/). **Having a GitHub (or other online repo) allows you to have all your code, markdown, figures, data, etc archived online for safety and version control**. You can make these repositories private or collaborative. It is easy! There are a lot of resources out there on why/how to use GitHub, and you'll see why it is important as you advance your carpentry--you can [read about how painless this is](http://happygitwithr.com/big-picture.html).
   
 Whether you choose to GIT with it, or stick with running from your device, you should start by making an *R project* in R-Studio. You can read all about how to do this at [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html). 
     
-In R Studio you can run a Project from your local directory or make one with version control by clicking the option to make an R project with version control will set you on the path to linking with GitHub (if you go this route, see [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html) first, as you must set up a github account, then make a repository, then use the repository URL to link to your R project). 
+In R Studio you can run a Project from your local directory or make one with version control by clicking the option to make an R project with version control will set you on the path to linking with GitHub (if you go this route, see [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html) first, as you must set up a github account, then make a repository, then use the repository URL to link to your R project). There are a few more steps to integrating R and github now, since github has moved to two-factor authentication, but you can see the [how to](https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication) and some [trouble shooting](https://stackoverflow.com/questions/66065099/how-to-update-github-authentification-token-on-rstudio-to-match-the-new-policy) in the linked sites. 
   
 If you decide to instead without version control, then set up the project wherever you wish on your computer. When you set your "R Project" directory, R Studio will generate a folder that houses your R Project. From here you can create your Rmd file and folder directory as you wish. For best practices, I recommend setting up a directory for each project (*see directory for this project below*).  
   
@@ -171,7 +172,7 @@ Code chunks are where your code is executed. If you do not set the working direc
 getwd() #where are your files? See how they should all be running from your R project in the directory
 ``` 
   
-Below: This is a code chunk, and this is how you enter your data into R markdown. Note the `code chunks` always start with a ` ```{r...}` and ends with a `{...}`. You can add these chunks with the shortcut `Control + Option + I"`.  
+*Below*: This is a code chunk, and this is how you enter your data into R markdown. Note the `code chunks` always start with a ` ```{r...}` and ends with a `{...}`. You can add these chunks with the shortcut `Control + Option + I"`.  
   
 The code chunk below is an example of attaching the data (.csv), familiar to you R-heads. Since the data file is in the directory specified by ` knitr::opts_knit$set(root.dir =... ` above, you can reference the .csv easily.
 
@@ -186,9 +187,9 @@ data<-read.csv("data/coral_data.csv")
 
 # set factor levels
 cols <- c("Time.point", "Period", "Site", "Species", "Status", "Sample.ID")
-data %>% mutate_at(cols, funs(factor(.)))
+data<-data %>% mutate_at(cols, funs(factor(.)))
 
-names(data)
+head(data)
 ```
   
    
@@ -253,7 +254,7 @@ lines(density(data$chla),lwd=3,col="mediumseagreen")
 ```
   
   
-But something to consider... 
+*But something to consider...* 
   
 R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.  
   
