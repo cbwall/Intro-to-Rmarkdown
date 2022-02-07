@@ -1,7 +1,7 @@
 ---
 title: "An introduction to R markdown"
-author: "Chris B. Wall -- chris.wall@hawaii.edu"
-date: "03/05/2020"
+author: "Chris B. Wall -- cbwall@ucsd.edu"
+date: "02/07/2022"
 output:
   html_document:
     code_folding: hide
@@ -60,15 +60,22 @@ For the advanced Markdown-ers, you can also write and code a manuscript in markd
   
 ## Markdown basics
   
+Before we get started, let us discuss version control and software carpentry. It is increasingly important for you to back up and secure your data. This is not only true for your final data but also the versions of your data on the way to the "ultimate" data version. Think of this as a software update. First, you need to have a version of the software; this version may change as your team/PI/committee or others as for changes to your code. You can then update your code to reflect new needs, while also maintaining an archive or what the code WAS. This is in effect: version control. It helps you back up your work and maintain an archive of where you were and where you are.  
+Now, carpentry. Having a simple, clear directory of data folders is critical for making your data structure navigable. This is general house keeping for your directory. It will make your code, output, and products flow and keep your directory clean and organized. 
+  
+Is this all above your head? That's okay. See some open access resources here to help you get started in R (notice the pages are all R-Markdown html objects!) and on the path to coding. [R data carpentry course](https://datacarpentry.org/R-ecology-lesson/index.html).
+  
   
 ### First: Git with R Projects  
 My first advise to you would be to set up a [GitHub account](https://github.com/). Having a GitHub allows you to have all your code, markdown, figures, data, etc archived online for safety and version control. You can make these repositories private or collaborative. It is easy! There are a lot of resources out there on why/how to use GitHub, and you'll see why it is important as you advance your carpentry--you can [read about how painless this is](http://happygitwithr.com/big-picture.html).
   
 Whether you choose to GIT with it, or stick with running from your device, you should start by making an *R project* in R-Studio. You can read all about how to do this at [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html). 
+    
+In R Studio you can run a Project from your local directory or make one with version control by clicking the option to make an R project with version control will set you on the path to linking with GitHub (if you go this route, see [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html) first, as you must set up a github account, then make a repository, then use the repository URL to link to your R project). 
   
-In R Studio, clicking the option to make an R project with version control will set you on the path to linking with GitHub (if you go this route, see [happygitwithR.com](http://happygitwithr.com/rstudio-git-github.html) first, as you must set up a github account, then make a repository, then use the repository URL to link to your R project). 
+If you decide to instead without version control, then set up the project wherever you wish on your computer. When you set your "R Project" directory, R Studio will generate a folder that houses your R Project. From here you can create your Rmd file and folder directory as you wish. For best practices, I recommend setting up a directory for each project (*see directory for this project below*).  
   
-If you decide to instead without version control, then set up the project wherever you wish on your computer. When you set your "R Project" directory, R Studio will generate a folder that houses your R Project. From here you can create your Rmd file and folder directory as you wish. For best practices, I recomment setting up a directory for each project (*see directory for this project below*). From here, everytime you open want to work on this project in R studio, click on the Project. This will allow you to load data in a simple way that anyone can understand (i.e., upload file "symbiont.csv", from folder "data")--and it is easy to share this structure with collaborators.  
+From here, every time you open want to work on this project in R studio, click on the Project. This will allow you to load data in a simple way that anyone can understand (i.e., upload file "symbiont.csv", from folder "data")--and it is easy to share this structure with collaborators.
   
 Yet another reason to use R Projects: it will eliminate the pesky and sometimes overly personal directories we all have on our desktop aka: "~/Desktop/PhD/WTFproject/NeverGoingToGetPublished/data.csv"
   
