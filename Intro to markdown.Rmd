@@ -32,7 +32,7 @@ if (!require("pacman")) install.packages("pacman") # for rapid install if not in
 
 # use pacman to load all the packages you are missing!
 pacman::p_load('knitr', 'lme4', 'lmerTest', 'tidyverse', 'magrittr', 'effects', 'dplyr', 
-               'plotrix', 'car', 'bookdown')
+               'plotrix', 'car', 'plyr', 'bookdown')
 
 ```
 
@@ -50,9 +50,9 @@ When exporting your markdown you can...
 You can write code and execute functions in a similar way to normal R script files. However, there are a few distinct differences between R scripts and R markdown scripts. Some of these differences relate to how code is executed. Other differences can be seen in the added benefit of integrating scripts with outputs and other embedded properties.  
 
 The benefit of using markdown with colleagues is they can actually see the script, the figures, the path of model selection, even the assumptions of ANOVA (QQ plots, etc) that normally are hidden behind the curtain.  
-In short, **R markdown helps make your science repeatable, sharable, and data analysis coherent!**  
+In short, **R markdown helps make your science repeatable, accessible, and data analysis coherent!**  
   
-Here are some common commands and examples of what Markdown can do for you. I reccommend visiting the [R Bookdown for a complete and exhaustive guide](https://bookdown.org/yihui/rmarkdown/ or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+Here are some common commands and examples of what Markdown can do for you. I recommend visiting the [R Bookdown for a complete and exhaustive guide](https://bookdown.org/yihui/rmarkdown/) or the [R markdown cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
     
 If you want to test yourself, the [R Markdown tutorial](https://www.markdowntutorial.com/) is another great guide.  
   
@@ -62,6 +62,7 @@ For the advanced Markdown-ers, you can also write and code a manuscript in markd
 ## Markdown basics
   
 Before we get started, **let us discuss version control and software carpentry**. It is increasingly important for you to back up and secure your data. This is not only true for your final data but also the versions of your data on the way to the "ultimate" data version. Think of this as a software update. First, you need to have a version of the software; this version may change as your team/PI/committee or others as for changes to your code. You can then update your code to reflect new needs, while also maintaining an archive or what the code WAS. This is in effect: version control. It helps you back up your work and maintain an archive of where you were and where you are.  
+  
 Now, carpentry. Having a simple, clear directory of data folders is critical for making your data structure navigable. This is general house keeping for your directory. It will make your code, output, and products flow and keep your directory clean and organized. 
   
 Is this all above your head? That's okay. See some open access resources here to help you get started in R (notice the pages are all R-Markdown html objects!) and on the path to coding. [R data carpentry course](https://datacarpentry.org/R-ecology-lesson/index.html).
@@ -232,10 +233,10 @@ Note in the coding above I used the html codes for centering the image and the c
   
 Now let's use some of these options to see how this code could be executed.
 ```{r first plot example, fig.show='hold', out.width= "30%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
-data<-read.csv("data/coral_data.csv")
+# use 'data', loaded above
+
 par(mar = c(4, 6, 0.2, 0.1))
-#plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
-     #ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+
 plot(data$chla, pch=16, cex=1.2, col="coral",
       ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
 plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
@@ -290,6 +291,10 @@ In this chunk we will make use of some data of photopigments (Chlorophyll *a* co
 
 par(mfrow=c(1,1), pty="sq")
 Status.label<-c("Bleached", "Pigmented") # for x labels
+
+# sometimes loading the repo .csv gives an error message here, not sure why! Somehow the factor "Status" gets changed to integer incorrectly, should be fixed above in ~ line 190. In case, not, set it again.
+
+data$Status<-as.factor(data$Status)
 
 plot(chla~Status, data=data, xaxt="n", col="salmon",
      ylab=expression(paste("Chlorophyll", ~italic("a"), ~(mu*g~cm^-2), sep="")), 
