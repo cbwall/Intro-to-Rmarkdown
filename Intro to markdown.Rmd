@@ -190,7 +190,7 @@ data<-read.csv("data/coral_data.csv")
 cols <- c("Time.point", "Period", "Site", "Species", "Status", "Sample.ID")
 data<-data %>% mutate_at(cols, funs(factor(.)))
 
-head(data)
+head(data) 
 ```
   
    
