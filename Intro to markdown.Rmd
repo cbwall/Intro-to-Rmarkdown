@@ -1,7 +1,7 @@
 ---
 title: "An introduction to R markdown"
-author: "Chris B. Wall -- cbwall@ucsd.edu"
-date: "02/07/2022"
+author: "Chris B. Wall -- cbwall@hawaii.edu"
+date: "12/11/2024"
 output:
   html_document:
     code_folding: hide
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
 
 # you will need 'knitr' to make your codes 'knit' and we are setting some global options here for the chunks to not display warnings and messages in out final output--also we want figures to be in the center. Although could be set to 'left' or 'right' as well. 
 
-# ^^^ above: you can put global options, such as "no warmings", "no messages"
+# ^^^ above: you can put global options, such as "no warnings", "no messages"
 # ^^^ you can also set global directory like this....knitr::opts_knit$set(root.dir = '~/file/file') 
 # BUT instead, use R projects and all your files will be in the location of your Project... 
 
