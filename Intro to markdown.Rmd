@@ -83,7 +83,7 @@ Yet another reason to use R Projects: it will eliminate the pesky and sometimes 
   
 <center>  
   
-![**Figure 1. Data Directory example**](data/directory example.jpg){ width=30%}
+![**Figure 1. Data Directory example**](data/directory example.png){ width=30%}
   
 </center>  
   
