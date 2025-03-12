@@ -187,8 +187,8 @@ The code chunk below is an example of attaching the data (.csv), familiar to you
 data<-read.csv("data/coral_data.csv")
 
 # set factor levels
-cols <- c("Time.point", "Period", "Site", "Species", "Status", "Sample.ID")
-data<-data %>% mutate_at(cols, funs(factor(.)))
+facs <- c("Time.point", "Period", "Site", "Species", "Status", "Sample.ID")
+data[facs] <- lapply(data[facs], factor)
 
 head(data) 
 ```
@@ -235,14 +235,27 @@ Now let's use some of these options to see how this code could be executed.
 ```{r first plot example, fig.show='hold', out.width= "30%", fig.align='center', fig.cap="**Figure 4. Example of side-by-side plots at 50%, with a 'fig hold' option**"}
 # use 'data', loaded above
 
-par(mar = c(4, 6, 0.2, 0.1))
+ggplot(data, aes(y=biomass, x=Site, fill=Status))+
+  geom_boxplot() +
+  ylab(expression(paste("Biomass", ~(mg~cm^-2), sep="")))+
+  scale_fill_manual(values=c("lightblue", "mediumseagreen"))+
+  theme_classic()
 
-plot(data$chla, pch=16, cex=1.2, col="coral",
-      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
-plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
-     ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
-plot(data$chla, pch=16, cex=1.2, col="coral",
-      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+ggplot(data, aes(y=chla, x=Site, fill=Status))+
+  geom_boxplot() +
+  ylab(expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))+
+  scale_fill_manual(values=c("lightsalmon", "maroon"))+
+  theme_classic()
+
+
+#### USING BASE R EXAMPLE
+#par(mar = c(4, 6, 0.2, 0.1))
+#plot(data$chla, pch=16, cex=1.2, col="coral",
+#      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
+#plot(data$biomass, pch=16, cex=1.2, col="mediumseagreen",
+#    ylab=expression(paste("Biomass", ~(mg~cm^-2), sep="")))
+#plot(data$chla, pch=16, cex=1.2, col="coral",
+#      ylab=expression(paste("Chlorophyll", ~italic("a"+"c"[2]), ~(mu*g~cm^-2), sep="")))
 ```
   
   
@@ -257,7 +270,7 @@ lines(density(data$chla),lwd=3,col="mediumseagreen")
   
 *But something to consider...* 
   
-R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk hit the green arrow in the right of the chunk, or highlight *all* the lines you want to run and execute them this way.  
+R scripts in code chunks operate a bit differently than classic R scripts. If you want to run your plot commands line-by-line you may need to include calls, such as `with()` or `par(new=T)` to specify that you do NOT want a new plot device to be made, but instead to keep working on the device you have opened. So to execute the whole chunk `hit the green arrow in the right of the chunk`, or highlight *all* the lines you want to run and execute them this way.  
   
 Let's run this code chunk but set an option for no figure caption.
 ```{r, results="hide", fig.dim=c(5,3), fig.align='center', fig.cap=""}
@@ -277,7 +290,7 @@ legend("topright", legend=c(expression(italic("Montipora capitata")), expression
 # many ways to do this, but this one works well in Markdown
 # notice you are specifying the folder ('figures'), which is where the figure will be exported to
 
-dev.print(pdf, "figures/biomass in two species.pdf", encod="MacRoman", height=4, width=6) # export in directory
+dev.print(pdf, "figures/biomass in two species.pdf", height=4, width=6) # export in directory
 dev.off()
 
 ```
@@ -305,12 +318,12 @@ axis(1, at=1:2, labels=Status.label) # this plots new labels on the x axis (axis
 ##### save the figure and export to directory? ####
 # in this case, there is a file in my directory names 'figures' where I want plots to go
 
-dev.print(pdf, "figures/Chlorophyll.figure.pdf", encod="MacRoman", height=5, width=5) 
+dev.print(pdf, "figures/Chlorophyll.figure.pdf", height=5, width=5) 
 # height and width set here for the output figure
 dev.off() # close the object
 ```
   
-I'm using ```dev.copy(pdf, "figures/Chlorophyll.figure.pdf", encod="MacRoman", height=5, width=5)``` to print the devise, export it as a pdf, save in the folder names "figures", I'm naming the figure as "Chlorophyll.figure.pdf", and exporting at 5x5 dimensions. Note the code chunk option is specifying to print the figure in the Markdown at a smaller scale (4x4).
+I'm using ```dev.copy(pdf, "figures/Chlorophyll.figure.pdf", height=5, width=5)``` to print the devise, export it as a pdf, save in the folder names "figures", I'm naming the figure as "Chlorophyll.figure.pdf", and exporting at 5x5 dimensions. Note the code chunk option is specifying to print the figure in the Markdown at a smaller scale (4x4).
   
   
 #### Examples
@@ -405,7 +418,7 @@ Run a linear mixed effect model, see the anova output, random effects, and plot 
 
 ```{r, fig.dim=c(8,4), fig.align='center', fig.cap="**Figure 9. Model output fixed effect plots**"}
 mod<-lmer(chla~Species+Site*Status+(1|Pair), data=data)
-anova(mod, type=2) # fixed effects
+anova(mod, type=3) # fixed effects
 ranova(mod) # random effects
 plot(allEffects(mod), ylab="total chlorophyll/cm2", par.strip.text=list(cex=0.6))
 ```
