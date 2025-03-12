@@ -21,7 +21,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.align='center')
 
 # getwd() # show me my working directory, this is where your R project and files are
 
-########## Load packages
+########## Load packages to run the analyses
 
 # for this lesson you will need to download the following packages
 # if you don't have them already in your library, the following code can be used
