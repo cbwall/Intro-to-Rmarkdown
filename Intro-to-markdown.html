@@ -11,9 +11,8 @@
 
 <meta name="author" content="Chris B. Wall – cbwall@hawaii.edu" />
 
-<meta name="date" content="2024-12-11" />
 
-<title>An introduction to R markdown</title>
+<title>An Introduction to R markdown</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1567,9 +1566,9 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">An introduction to R markdown</h1>
+<h1 class="title toc-ignore">An Introduction to R markdown</h1>
 <h4 class="author">Chris B. Wall – <a href="mailto:cbwall@hawaii.edu" class="email">cbwall@hawaii.edu</a></h4>
-<h4 class="date">12/11/2024</h4>
+<h4 class="date">9/11/2025</h4>
 
 </div>
 
@@ -2299,12 +2298,12 @@ chunk</p>
 <p>Run a linear mixed effect model, see the anova output, random
 effects, and plot effects</p>
 <pre class="r"><code>mod&lt;-lmer(chla~Species+Site*Status+(1|Pair), data=data)
-anova(mod, type=2) # fixed effects</code></pre>
-<pre><code>## Type II Analysis of Variance Table with Satterthwaite&#39;s method
+anova(mod, type=3) # fixed effects</code></pre>
+<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
 ##             Sum Sq Mean Sq NumDF DenDF F value    Pr(&gt;F)    
 ## Species      30.28   30.28     1    52  7.4830  0.008499 ** 
-## Site         17.64    8.82     2    52  2.1798  0.123291    
-## Status      371.25  371.25     1    52 91.7299 4.516e-13 ***
+## Site         17.69    8.84     2    52  2.1852  0.122678    
+## Status      369.59  369.59     1    52 91.3201 4.868e-13 ***
 ## Site:Status  22.38   11.19     2    52  2.7652  0.072238 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
