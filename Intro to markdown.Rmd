@@ -215,7 +215,7 @@ Note in the coding above I used the html codes for centering the image and the c
 
 
 ### Figure formatting
-- `fig.show=FALSE`: this will hide the figures you generate. This may be useful for some of those assumptions of ANOVA-- you want to see it, but do you want all of them in your final archived datafile? Maybe not.  
+- `fig.show=FALSE`: this will hide the figures you generate. This may be useful for some of those assumptions of ANOVA-- you want to see it, but do you want all of them in your final archived datafile? Maybe not.   
 
 - `fig.width=5, fig.height=3`: The (graphical device) size of R plots in inches. This records your output figure as a graphical device using *knitr* and will write this to files. There are other ways to edit figure size from this intial dimension (*see below*). You can also specify the two (width and height using) `fig.dim`, as in the previous examle `fig.dim = c(5, 3)`  
   
